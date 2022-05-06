@@ -192,6 +192,18 @@ def get_model(model, model_params):
     }
     return models.get(model.lower())(**model_params)
 
+def sliding_windows(data, seq_length):
+    x = []
+    y = []
+
+    for i in range(len(data)-seq_length-1):
+        _x = data[i:(i+seq_length)]
+        _y = data[i+seq_length]
+        x.append(_x)
+        y.append(_y)
+
+    return np.array(x),np.array(y)
+
 def prepare_data(train_file, val_file, test_file):
     train_data = pd.read_csv(train_file, index_col=0)
     val_data = pd.read_csv(val_file, index_col=0)
